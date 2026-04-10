@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lily & Nopal | Finance ✨</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LilyNopal">
+    <link rel="apple-touch-icon" href="logo.png">
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body id="main-body" data-theme="lily">
+    
     <div id="loading-overlay" class="hidden">
         <div class="loader-content">
             <span class="loader-emoji">💸</span>
@@ -17,7 +25,6 @@
 
     <div id="toast" class="hidden">Transaksi Berhasil! ✅</div>
 
-    <div class="background-overlay"></div>
     <div class="container fade-in">
         <header class="glass shimmer">
             <div class="header-content">
@@ -56,11 +63,11 @@
 
         <div class="card glass list-card">
             <div class="table-scroll" id="scroll-area">
-                <table><tbody id="transaction-table"><tr><td>Initializing Data... ✨</td></tr></tbody></table>
+                <table><tbody id="transaction-table"><tr><td>Initializing... ✨</td></tr></tbody></table>
             </div>
         </div>
 
-        <div class="days-pill glass">DAYS WITH NOPAL: <span id="days-count">0</span> 💖</div>
+        <div class="days-pill glass">DAYS WITH LILY: <span id="days-count">0</span> 💖</div>
     </div>
     <script src="script.js"></script>
 </body>
