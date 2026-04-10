@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lily & Nopal | Diary ✨</title>
+    <title>Lily & Nopal | Finance ✨</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body id="main-body" data-theme="lily">
+    <div id="loading-overlay" class="hidden">
+        <div class="loader-content">
+            <span class="loader-emoji">💸</span>
+            <p class="loader-text">Memproses Transaksi...</p>
+        </div>
+    </div>
+
+    <div id="toast" class="hidden">Transaksi Berhasil! ✅</div>
+
     <div class="background-overlay"></div>
     <div class="container fade-in">
         <header class="glass shimmer">
-            <span class="ribbon">🎀</span> <span class="header-title">Lily & Nopal</span> <span class="ribbon">🎀</span>
+            <div class="header-content">
+                <span class="ribbon">🎀</span>
+                <span class="header-title">Lily & Nopal</span>
+                <span class="ribbon">🎀</span>
+            </div>
         </header>
 
         <div class="tab-parent">
@@ -20,29 +33,30 @@
         </div>
 
         <div class="summary-row">
-            <div class="s-box in glass"><small>IN</small><b id="total-masuk">0</b></div>
-            <div class="s-box out glass"><small>OUT</small><b id="total-keluar">0</b></div>
-            <div class="s-box balance glass"><small>SISA</small><b id="sisa-saldo">0</b></div>
+            <div class="s-box in glass"><small>INCOME</small><b id="total-masuk">0</b></div>
+            <div class="s-box out glass"><small>EXPENSE</small><b id="total-keluar">0</b></div>
+            <div class="s-box balance glass"><small>BALANCE</small><b id="sisa-saldo">0</b></div>
         </div>
 
         <div class="card glass entry-card">
             <div class="input-grid">
                 <input type="date" id="in-date" class="full-width dark-input">
-                <div class="select-wrapper">
-                    <select id="in-kat" class="dark-input">
+                <div class="select-wrapper" id="cat-wrapper">
+                    <select id="in-kat" class="dark-input" onchange="filterTable()">
+                        <option value="Semua" selected disabled>Pilih Tipe... 📋</option>
                         <option value="Pemasukan">Masuk 🌸</option>
                         <option value="Pengeluaran">Keluar 💸</option>
                     </select>
                 </div>
                 <input type="number" id="in-nom" placeholder="Rp 0" inputmode="numeric" class="dark-input">
-                <input type="text" id="in-ket" placeholder="Keterangan..." class="full-width dark-input">
-                <button onclick="sendData()" id="btn-send" class="btn-primary full-width">SIMPAN MEMORY 💖</button>
+                <input type="text" id="in-ket" placeholder="Keterangan (opsional)" class="full-width dark-input">
+                <button onclick="sendData()" id="btn-send" class="btn-primary full-width">SIMPAN TRANSAKSI 💸</button>
             </div>
         </div>
 
         <div class="card glass list-card">
-            <div class="table-scroll">
-                <table><tbody id="transaction-table"><tr><td>Syncing... ✨</td></tr></tbody></table>
+            <div class="table-scroll" id="scroll-area">
+                <table><tbody id="transaction-table"><tr><td>Initializing Data... ✨</td></tr></tbody></table>
             </div>
         </div>
 
