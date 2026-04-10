@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lily & Nopal | Diary ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body id="main-body" data-theme="lily">
+    <div class="background-overlay"></div>
+    <div class="container fade-in">
+        <header class="glass shimmer">
+            <span class="ribbon">🎀</span> <span class="header-title">Lily & Nopal</span> <span class="ribbon">🎀</span>
+        </header>
+
+        <div class="tab-parent">
+            <button class="tab-btn active" id="btn-lily" onclick="switchUser('lily', event)">✨ Lily</button>
+            <button class="tab-btn" id="btn-nopal" onclick="switchUser('nopal', event)">💎 Nopal</button>
+        </div>
+
+        <div class="summary-row">
+            <div class="s-box in glass"><small>IN</small><b id="total-masuk">0</b></div>
+            <div class="s-box out glass"><small>OUT</small><b id="total-keluar">0</b></div>
+            <div class="s-box balance glass"><small>SISA</small><b id="sisa-saldo">0</b></div>
+        </div>
+
+        <div class="card glass entry-card">
+            <div class="input-grid">
+                <input type="date" id="in-date" class="full-width dark-input">
+                <div class="select-wrapper">
+                    <select id="in-kat" class="dark-input">
+                        <option value="Pemasukan">Masuk 🌸</option>
+                        <option value="Pengeluaran">Keluar 💸</option>
+                    </select>
+                </div>
+                <input type="number" id="in-nom" placeholder="Rp 0" inputmode="numeric" class="dark-input">
+                <input type="text" id="in-ket" placeholder="Keterangan..." class="full-width dark-input">
+                <button onclick="sendData()" id="btn-send" class="btn-primary full-width">SIMPAN MEMORY 💖</button>
+            </div>
+        </div>
+
+        <div class="card glass list-card">
+            <div class="table-scroll">
+                <table><tbody id="transaction-table"><tr><td>Syncing... ✨</td></tr></tbody></table>
+            </div>
+        </div>
+
+        <div class="days-pill glass">DAYS WITH NOPAL: <span id="days-count">0</span> 💖</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
