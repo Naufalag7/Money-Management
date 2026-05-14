@@ -9,11 +9,11 @@ let memoryCache = { lily: [], nopal: [] };
 
 const showToast = (msg) => {
     const t = document.getElementById('toast');
-    t.innerText = msg; t.classList.remove('hidden');
+    t.innerText = msg; 
+    t.classList.remove('hidden');
     setTimeout(() => t.classList.add('hidden'), 2500);
 };
 
-// Auto-refresh logic
 async function preloadAllData() {
     try {
         const [resL, resN] = await Promise.all([fetch(CONFIG.lily.url), fetch(CONFIG.nopal.url)]);
@@ -21,23 +21,24 @@ async function preloadAllData() {
         memoryCache.lily = textL.split(/\r?\n/).filter(r => r.trim()).slice(1).reverse();
         memoryCache.nopal = textN.split(/\r?\n/).filter(r => r.trim()).slice(1).reverse();
         filterTable();
-    } catch (e) { console.error("Sync error", e); }
+    } catch (e) { 
+        console.error(e); 
+    }
 }
 
 async function sendData() {
     const nom = document.getElementById('in-nom').value;
     const kat = document.getElementById('in-kat').value;
-    if (kat === "Semua") return showToast("Pilih kategori transaksi! 💸");
-    if (!nom) return showToast("Nominal kosong! 💰");
+    if (kat === "Semua") return showToast("Pilih tipe dulu ya! 🎀");
+    if (!nom) return showToast("Nominalnya jangan lupa! 💸");
 
     document.getElementById('loading-overlay').classList.remove('hidden');
     
-    // Keterangan diatur menjadi string kosong jika tidak diisi
     const data = { 
         user: currentUser === 'lily' ? 'Lily' : 'Nopal', 
         kat, nom, 
-        ket: document.getElementById('in-ket').value.trim() || "", 
-        customDate: document.getElementById('in-date').value 
+        ket: document.getElementById('in-ket').value.trim() || "-", 
+        customDate: new Date().toISOString().split('T')[0] 
     };
 
     try {
@@ -45,10 +46,13 @@ async function sendData() {
         document.getElementById('in-nom').value = "";
         document.getElementById('in-ket').value = "";
         document.getElementById('in-kat').value = "Semua";
-        showToast("Transaksi Disimpan! ✅");
-        await preloadAllData(); // Refresh all data immediately
-    } catch (e) { showToast("Gagal menyimpan!"); } 
-    finally { document.getElementById('loading-overlay').classList.add('hidden'); }
+        showToast("Berhasil dicatat! 💖");
+        await preloadAllData();
+    } catch (e) { 
+        showToast("Gagal simpan nih :("); 
+    } finally { 
+        document.getElementById('loading-overlay').classList.add('hidden'); 
+    }
 }
 
 function filterTable() {
@@ -66,9 +70,17 @@ function renderTable(rows) {
         if (!tgl || !kat) return;
         const n = parseInt(nomRaw.replace(/[^0-9]/g, '')) || 0;
         const isIn = kat.toLowerCase().includes("masuk");
-        html += `<tr><td>${tgl.substring(0,5)}</td><td style="color:${isIn?'#4CAF50':'#F44336'};font-weight:700">${isIn?'IN':'OUT'}</td><td>${n.toLocaleString('id-ID')}</td><td>${ket}</td></tr>`;
+        const colorClass = isIn ? 'row-in' : 'row-out';
+        const icon = isIn ? '↓' : '↑';
+        
+        html += `<tr>
+            <td>${tgl.substring(0,5)}</td>
+            <td class="${colorClass}">${icon}</td>
+            <td>Rp ${n.toLocaleString('id-ID')}</td>
+            <td>${ket}</td>
+        </tr>`;
     });
-    document.getElementById('transaction-table').innerHTML = html || "<tr><td>Belum ada data</td></tr>";
+    document.getElementById('transaction-table').innerHTML = html || "<tr><td colspan='4' style='text-align:center;'>Belum ada jajan ✨</td></tr>";
     
     let tIn = 0, tOut = 0;
     memoryCache[currentUser].forEach(r => {
@@ -76,9 +88,9 @@ function renderTable(rows) {
         const n = parseInt(c[7]?.replace(/[^0-9]/g, '')) || 0;
         if (c[6]?.toLowerCase().includes("masuk")) tIn += n; else tOut += n;
     });
-    document.getElementById('total-masuk').innerText = tIn.toLocaleString('id-ID');
-    document.getElementById('total-keluar').innerText = tOut.toLocaleString('id-ID');
-    document.getElementById('sisa-saldo').innerText = (tIn - tOut).toLocaleString('id-ID');
+    document.getElementById('total-masuk').innerText = `Rp ${tIn.toLocaleString('id-ID')}`;
+    document.getElementById('total-keluar').innerText = `Rp ${tOut.toLocaleString('id-ID')}`;
+    document.getElementById('sisa-saldo').innerText = `Rp ${(tIn - tOut).toLocaleString('id-ID')}`;
 }
 
 function switchUser(u, e) {
@@ -87,14 +99,19 @@ function switchUser(u, e) {
     e.currentTarget.classList.add('active');
     document.body.setAttribute('data-theme', u);
     document.getElementById('in-kat').value = "Semua";
+    
+    const mascot = document.getElementById('mascot-icon');
+    if(u === 'lily') {
+        mascot.innerText = '🐰';
+    } else {
+        mascot.innerText = '🦖';
+    }
+    
     filterTable(); 
 }
 
 window.onload = () => { 
     preloadAllData(); 
-    document.getElementById('in-date').value = new Date().toISOString().split('T')[0];
     document.getElementById('days-count').innerText = Math.ceil(Math.abs(new Date() - new Date("2025-09-09")) / 86400000);
-    
-    // Auto-refresh data every 30 seconds
     setInterval(preloadAllData, 30000);
 };
