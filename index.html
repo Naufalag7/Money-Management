@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lily & Nopal | Finance ✨</title>
+    <title>Lily & Nopal | Finance 🎀</title>
     
     <link rel="icon" type="image/png" href="logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,62 +12,67 @@
     <link rel="apple-touch-icon" href="logo.png">
 
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
 </head>
 <body id="main-body" data-theme="lily">
     
     <div id="loading-overlay" class="hidden">
         <div class="loader-content">
-            <span class="loader-emoji">💸</span>
-            <p class="loader-text">Memproses Transaksi...</p>
+            <span class="loader-emoji">🧸</span>
+            <p class="loader-text">Tunggu yaa...</p>
         </div>
     </div>
 
-    <div id="toast" class="hidden">Transaksi Berhasil! ✅</div>
+    <div id="toast" class="hidden">Masuk dehh! 🎀</div>
 
     <div class="container fade-in">
-        <header class="glass shimmer">
-            <div class="header-content">
-                <span class="ribbon">🎀</span>
-                <span class="header-title">Lily & Nopal</span>
-                <span class="ribbon">🎀</span>
-            </div>
+        <div class="mascot-container">
+            <div class="mascot" id="mascot-icon">🐰</div>
+        </div>
+        
+        <header class="cute-header">
+            <h1 class="header-title">Lily & Nopal</h1>
         </header>
 
         <div class="tab-parent">
-            <button class="tab-btn active" id="btn-lily" onclick="switchUser('lily', event)">✨ Lily</button>
-            <button class="tab-btn" id="btn-nopal" onclick="switchUser('nopal', event)">💎 Nopal</button>
+            <button class="tab-btn active" id="btn-lily" onclick="switchUser('lily', event)">🎀 Lily</button>
+            <button class="tab-btn" id="btn-nopal" onclick="switchUser('nopal', event)">🌱 Nopal</button>
         </div>
 
-        <div class="summary-row">
-            <div class="s-box in glass"><small>INCOME</small><b id="total-masuk">0</b></div>
-            <div class="s-box out glass"><small>EXPENSE</small><b id="total-keluar">0</b></div>
-            <div class="s-box balance glass"><small>BALANCE</small><b id="sisa-saldo">0</b></div>
-        </div>
-
-        <div class="card glass entry-card">
-            <div class="input-grid">
-                <input type="date" id="in-date" class="full-width dark-input">
-                <div class="select-wrapper" id="cat-wrapper">
-                    <select id="in-kat" class="dark-input" onchange="filterTable()">
-                        <option value="Semua" selected disabled>Pilih Tipe... 📋</option>
-                        <option value="Pemasukan">Masuk 🌸</option>
-                        <option value="Pengeluaran">Keluar 💸</option>
-                    </select>
+        <div class="main-balance-card">
+            <small>Sisa Uang Jajan</small>
+            <h2 id="sisa-saldo">0</h2>
+            
+            <div class="mini-summary">
+                <div class="mini-box in">
+                    <span>Masuk 🌸</span>
+                    <b id="total-masuk">0</b>
                 </div>
-                <input type="number" id="in-nom" placeholder="Rp 0" inputmode="numeric" class="dark-input">
-                <input type="text" id="in-ket" placeholder="Keterangan (opsional)" class="full-width dark-input">
-                <button onclick="sendData()" id="btn-send" class="btn-primary full-width">SIMPAN TRANSAKSI 💸</button>
+                <div class="mini-box out">
+                    <span>Keluar 💸</span>
+                    <b id="total-keluar">0</b>
+                </div>
             </div>
         </div>
 
-        <div class="card glass list-card">
+        <div class="input-card">
+            <select id="in-kat" class="pill-input" onchange="filterTable()">
+                <option value="Semua" selected disabled>Pilih Tipe... ✨</option>
+                <option value="Pemasukan">Dapet Uang 🌸</option>
+                <option value="Pengeluaran">Jajan 💸</option>
+            </select>
+            <input type="number" id="in-nom" placeholder="Berapa nih? Rp 0" inputmode="numeric" class="pill-input">
+            <input type="text" id="in-ket" placeholder="Buat apa? (opsional)" class="pill-input">
+            <button onclick="sendData()" id="btn-send" class="btn-cute">SIMPAN 💖</button>
+        </div>
+
+        <div class="list-card">
             <div class="table-scroll" id="scroll-area">
-                <table><tbody id="transaction-table"><tr><td>Initializing... ✨</td></tr></tbody></table>
+                <table><tbody id="transaction-table"><tr><td>Lagi cari data... 🔍</td></tr></tbody></table>
             </div>
         </div>
 
-        <div class="days-pill glass">DAYS WITH LILY: <span id="days-count">0</span> 💖</div>
+        <div class="days-pill">HARI BARENG LILY: <span id="days-count">0</span> 💌</div>
     </div>
     <script src="script.js"></script>
 </body>
