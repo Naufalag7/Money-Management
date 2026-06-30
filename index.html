@@ -27,7 +27,7 @@
 
     <div class="container fade-in">
         <div class="mascot-container">
-            <div class="mascot" id="mascot-icon">🐰</div>
+            <img src="icon.png" class="mascot" id="mascot-icon" alt="Mascot">
         </div>
         
         <header class="cute-header">
@@ -64,6 +64,22 @@
             <input type="number" id="in-nom" placeholder="Berapa nih? Rp 0" inputmode="numeric" class="pill-input">
             <input type="text" id="in-ket" placeholder="Buat apa? (opsional)" class="pill-input">
             <button onclick="sendData()" id="btn-send" class="btn-cute">SIMPAN 💖</button>
+        </div>
+
+        <div class="budget-card fade-in">
+            <h3 style="margin-top:0; text-align:center; font-size: 16px;">Budget Bulanan 📊</h3>
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Budget</th>
+                        <th>Bayar</th>
+                        <th>Sts</th>
+                    </tr>
+                </thead>
+                <tbody id="budget-table-body">
+                    </tbody>
+            </table>
         </div>
 
         <div class="list-card">

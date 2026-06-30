@@ -7,6 +7,16 @@ const CONFIG = {
 let currentUser = 'lily';
 let memoryCache = { lily: [], nopal: [] };
 
+const BUDGET_CONFIG = [
+    { id: 'kos', name: 'Uang Kos', limit: 550000, keywords: ['kos', 'kost', 'sewa'] },
+    { id: 'arisan', name: 'Arisan Keluarga', limit: 200000, keywords: ['arisan', 'keluarga'] },
+    { id: 'gigi', name: 'Dokter Gigi', limit: 500000, keywords: ['gigi', 'kontrol', 'behel', 'dokter'] },
+    { id: 'makan', name: 'Budget Makan', limit: 500000, keywords: ['makan', 'jajan', 'minum', 'food'] },
+    { id: 'grab', name: 'Grab', limit: 444000, keywords: ['grab', 'gojek', 'maxim', 'transport', 'ojol', 'motor', 'mobil'] },
+    { id: 'makeup', name: 'Makeup', limit: 200000, keywords: ['makeup', 'skincare', 'kosmetik', 'dandan', 'lipstik'] },
+    { id: 'listrik', name: 'Listrik', limit: 150000, keywords: ['listrik', 'token', 'pln'] }
+];
+
 const showToast = (msg) => {
     const t = document.getElementById('toast');
     t.innerText = msg; 
@@ -91,6 +101,86 @@ function renderTable(rows) {
     document.getElementById('total-masuk').innerText = `Rp ${tIn.toLocaleString('id-ID')}`;
     document.getElementById('total-keluar').innerText = `Rp ${tOut.toLocaleString('id-ID')}`;
     document.getElementById('sisa-saldo').innerText = `Rp ${(tIn - tOut).toLocaleString('id-ID')}`;
+    
+    calculateBudget();
+}
+
+function calculateBudget() {
+    // Objek totals sekarang dibuat otomatis berdasarkan id di BUDGET_CONFIG
+    let totals = {};
+    BUDGET_CONFIG.forEach(b => totals[b.id] = 0);
+
+    const data = memoryCache[currentUser];
+    
+    // MOCK DATE UNTUK DEMO: Memaksa sistem membaca waktu saat ini sebagai Juni 2026
+    // PENTING: Kembalikan menjadi const now = new Date(); setelah demo selesai!
+    const now = new Date("2026-06-15T12:00:00"); 
+    
+    const curYear = now.getFullYear().toString();
+    const m1 = String(now.getMonth() + 1).padStart(2, '0');
+    const m2 = String(now.getMonth() + 1);
+    
+    const idnMonths = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'agu', 'sep', 'okt', 'nov', 'des'];
+    const engMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    
+    const curMonthIdn = idnMonths[now.getMonth()];
+    const curMonthEng = engMonths[now.getMonth()];
+    const possibleNumberFormats = [`/${m1}/${curYear}`, `/${m2}/${curYear}`, `${curYear}-${m1}-`];
+
+    data.forEach(r => {
+        const c = r.split(',').map(v => v.replace(/"/g, '').trim());
+        const tgl = c[5] || ''; 
+        const kat = c[6] || '';
+        const nomRaw = c[7] || '';
+        const ket = (c[8] || '').toLowerCase();
+        
+        const tglLower = tgl.toLowerCase();
+        
+        const isNumberFormat = possibleNumberFormats.some(format => tgl.includes(format));
+        const isTextFormat = (tglLower.includes(curMonthIdn) || tglLower.includes(curMonthEng)) && tglLower.includes(curYear);
+        
+        if (!isNumberFormat && !isTextFormat) return;
+        if (kat.toLowerCase().includes("masuk")) return;
+
+        const n = parseInt(nomRaw.replace(/[^0-9]/g, '')) || 0;
+        
+        // Loop otomatis untuk mencocokkan kata kunci
+        for (let b of BUDGET_CONFIG) {
+            if (b.keywords.some(k => ket.includes(k))) {
+                totals[b.id] += n;
+                break; // Hentikan pencarian jika sudah masuk ke salah satu pos
+            }
+        }
+    });
+
+    renderBudgetTable(totals);
+}
+
+function renderBudgetTable(totals) {
+    const tbody = document.getElementById('budget-table-body');
+    if (!tbody) return;
+    
+    let html = '';
+    
+    BUDGET_CONFIG.forEach(b => {
+        const bayar = totals[b.id];
+        
+        let emoji = '⏳'; 
+        if (bayar > b.limit) {
+            emoji = '😡';
+        } else if (bayar > 0) {
+            emoji = '😊'; 
+        }
+        
+        html += `<tr>
+            <td>${b.name}</td>
+            <td>${(b.limit / 1000)}k</td>
+            <td>${(bayar / 1000)}k</td>
+            <td>${emoji}</td>
+        </tr>`;
+    });
+    
+    tbody.innerHTML = html;
 }
 
 function switchUser(u, e) {
@@ -102,14 +192,13 @@ function switchUser(u, e) {
     
     const mascot = document.getElementById('mascot-icon');
     if(u === 'lily') {
-        mascot.innerText = '🐰';
+        mascot.src = 'icon.png';
     } else {
-        mascot.innerText = '🦖';
+        mascot.src = 'icon2.png'; 
     }
     
     filterTable(); 
 }
-
 window.onload = () => { 
     preloadAllData(); 
     document.getElementById('days-count').innerText = Math.ceil(Math.abs(new Date() - new Date("2025-09-09")) / 86400000);

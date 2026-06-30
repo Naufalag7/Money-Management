@@ -1,22 +1,24 @@
 :root {
-    --l-bg: #FFF0F5;
-    --l-card: #FFFFFF;
-    --l-acc: #FFB6C1;
-    --l-txt: #8B5A65;
-    --l-shadow: rgba(255, 182, 193, 0.4);
+    /* Tema Lily (Cinnamoroll Biru Lembut) */
+    --l-bg: #E1F5FE;
+    --l-card: rgba(255, 255, 255, 0.85); /* Semi-transparan untuk efek kaca */
+    --l-acc: #81D4FA; /* Biru pastel */
+    --l-txt: #0277BD; /* Teks biru gelap agar terbaca */
+    --l-shadow: rgba(129, 212, 250, 0.4);
     
-    --n-bg: #EAEFE5;
-    --n-card: #FFFFFF;
-    --n-acc: #A3B899;
-    --n-txt: #4A5D4E;
-    --n-shadow: rgba(163, 184, 153, 0.4);
+    /* Tema Nopal (Cinnamoroll Biru Awan) */
+    --n-bg: #E1F5FE;
+    --n-card: rgba(255, 255, 255, 0.85);
+    --n-acc: #4FC3F7;
+    --n-txt: #01579B;
+    --n-shadow: rgba(79, 195, 247, 0.4);
 }
 
 body[data-theme="lily"] { 
-    background: var(--l-bg); color: var(--l-txt); --acc: var(--l-acc); --card: var(--l-card); --shadow: var(--l-shadow); 
+    color: var(--l-txt); --acc: var(--l-acc); --card: var(--l-card); --shadow: var(--l-shadow); 
 }
 body[data-theme="nopal"] { 
-    background: var(--n-bg); color: var(--n-txt); --acc: var(--n-acc); --card: var(--n-card); --shadow: var(--n-shadow); 
+    color: var(--n-txt); --acc: var(--n-acc); --card: var(--n-card); --shadow: var(--n-shadow); 
 }
 
 body { 
@@ -27,17 +29,37 @@ body {
     min-height: 100vh;
     display: flex; justify-content: center;
     touch-action: manipulation;
+    
+    /* Pengaturan Background bg.jpg */
+    background-color: #E1F5FE; /* Warna fallback */
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .container { width: 100%; max-width: 400px; margin-top: 30px; }
 
 .mascot-container { text-align: center; margin-bottom: -30px; position: relative; z-index: 2; }
+
 .mascot { 
-    font-size: 50px; background: var(--card); 
-    width: 80px; height: 80px; line-height: 80px; 
-    border-radius: 50%; margin: 0 auto; 
-    box-shadow: 0 10px 20px var(--shadow); 
+    width: 100px; 
+    height: 100px; 
+    margin: 0 auto; 
     animation: float 3s ease-in-out infinite; 
+    
+    /* Hapus bulatan, background, dan border */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    
+    /* Pastikan gambar utuh tidak terpotong */
+    object-fit: contain; 
+    display: block;
+    
+    /* Bayangan mengikuti bentuk asli gambar, bukan bentuk kotak */
+    filter: drop-shadow(0 10px 15px var(--shadow)); 
 }
 
 @keyframes float { 
@@ -45,18 +67,25 @@ body {
     50% { transform: translateY(-10px) rotate(5deg); } 
 }
 
+/* Penambahan backdrop-filter untuk efek Glassmorphism tembus pandang */
+.cute-header, .tab-btn, .input-card, .budget-card, .list-card, .days-pill {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
 .cute-header { 
     background: var(--card); padding: 35px 20px 15px; 
     text-align: center; border-radius: 35px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
     margin-bottom: 20px; 
+    border: 1px solid rgba(255,255,255,0.6);
 }
 
 .header-title { font-size: 24px; font-weight: 900; margin: 0; }
 
 .tab-parent { display: flex; gap: 12px; margin-bottom: 20px; }
 .tab-btn { 
-    flex: 1; padding: 14px; border-radius: 25px; border: none; 
+    flex: 1; padding: 14px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.6); 
     background: var(--card); color: inherit; font-weight: 800; font-size: 15px;
     cursor: pointer; transition: 0.3s;
     box-shadow: 0 8px 15px rgba(0,0,0,0.03);
@@ -65,6 +94,7 @@ body {
     background: var(--acc); color: #fff; 
     transform: translateY(-4px); 
     box-shadow: 0 12px 20px var(--shadow); 
+    border: none;
 }
 
 .main-balance-card { 
@@ -76,27 +106,28 @@ body {
 .main-balance-card::after { 
     content: ''; position: absolute; top: -50%; left: -50%; 
     width: 200%; height: 200%; 
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%); 
+    background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 60%); 
     pointer-events: none; 
 }
 .main-balance-card small { font-size: 13px; font-weight: 800; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
 .main-balance-card h2 { font-size: 38px; font-weight: 900; margin: 5px 0 15px; text-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
 
-.mini-summary { display: flex; justify-content: space-between; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 10px 15px; }
+.mini-summary { display: flex; justify-content: space-between; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 10px 15px; }
 .mini-box { display: flex; flex-direction: column; align-items: center; width: 48%; }
 .mini-box span { font-size: 11px; font-weight: 800; }
 .mini-box b { font-size: 16px; font-weight: 900; }
 
 .input-card { 
     background: var(--card); border-radius: 35px; padding: 20px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin-bottom: 20px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; 
     display: flex; flex-direction: column; gap: 12px; 
+    border: 1px solid rgba(255,255,255,0.6);
 }
 
 .pill-input { 
     width: 100%; padding: 16px 20px; border-radius: 25px; 
-    border: 2px solid #F0F0F0; background: #FAFAFA; 
-    color: inherit; font-family: inherit; font-size: 14px; font-weight: 700;
+    border: 2px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.6); 
+    color: var(--txt); font-family: inherit; font-size: 14px; font-weight: 700;
     outline: none; box-sizing: border-box; transition: 0.3s;
 }
 .pill-input:focus { border-color: var(--acc); background: #FFF; box-shadow: 0 0 0 4px var(--shadow); }
@@ -108,26 +139,54 @@ body {
 }
 .btn-cute:active { transform: scale(0.92); }
 
+/* Tabel Riwayat Default (Pill style) */
+table { width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 13px; font-weight: 700; }
+td { padding: 12px; background: rgba(255,255,255,0.7); border: none; }
+td:first-child { border-radius: 20px 0 0 20px; text-align: center; color: var(--acc); }
+td:last-child { border-radius: 0 20px 20px 0; font-size: 11px; opacity: 0.8; }
+.row-in { color: #50C878; }
+.row-out { color: #FF6B6B; }
+
+/* Budget Bulanan Card & Table */
+.budget-card { 
+    background: var(--card); border-radius: 35px; padding: 20px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; 
+    border: 1px solid rgba(255,255,255,0.6);
+}
+.budget-table { 
+    width: 100%; border-collapse: collapse; border-spacing: 0; font-size: 12px; font-weight: 700; 
+}
+.budget-table th { 
+    padding: 10px 5px; border-bottom: 2px solid rgba(255,255,255,0.8); color: var(--acc); text-align: center; 
+}
+.budget-table td { 
+    background: transparent; border-radius: 0 !important; 
+    padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.5); 
+    text-align: center; opacity: 1;
+}
+.budget-table td:first-child {
+    text-align: left; padding-left: 10px; color: var(--acc); border-radius: 0;
+}
+.budget-table td:last-child { 
+    font-size: 16px; opacity: 1; border-radius: 0;
+}
+.budget-table tr:last-child td { border-bottom: none; }
+
 .list-card { 
     background: var(--card); border-radius: 35px; padding: 20px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+    border: 1px solid rgba(255,255,255,0.6);
 }
 
 .table-scroll { max-height: 220px; overflow-y: auto; scroll-behavior: smooth; }
 .table-scroll::-webkit-scrollbar { width: 6px; }
 .table-scroll::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 10px; }
 
-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 13px; font-weight: 700; }
-td { padding: 12px; background: #FAFAFA; border: none; }
-td:first-child { border-radius: 20px 0 0 20px; text-align: center; color: var(--acc); }
-td:last-child { border-radius: 0 20px 20px 0; font-size: 11px; opacity: 0.7; }
-.row-in { color: #50C878; }
-.row-out { color: #FF6B6B; }
-
 .days-pill { 
     background: var(--card); padding: 16px; border-radius: 30px; 
     text-align: center; font-weight: 900; font-size: 13px; margin-top: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.03); color: var(--acc);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); color: var(--acc);
+    border: 1px solid rgba(255,255,255,0.6);
 }
 
 #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; justify-content: center; align-items: center; z-index: 9999; }
