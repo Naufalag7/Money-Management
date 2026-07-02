@@ -112,9 +112,7 @@ function calculateBudget() {
 
     const data = memoryCache[currentUser];
     
-    // MOCK DATE UNTUK DEMO: Memaksa sistem membaca waktu saat ini sebagai Juni 2026
-    // PENTING: Kembalikan menjadi const now = new Date(); setelah demo selesai!
-    const now = new Date("2026-06-15T12:00:00"); 
+    const now = new Date();
     
     const curYear = now.getFullYear().toString();
     const m1 = String(now.getMonth() + 1).padStart(2, '0');
