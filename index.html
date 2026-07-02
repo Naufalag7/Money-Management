@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lily & Nopal | Finance 🎀</title>
-    
+    <title>Finance | Lily & Nopal</title>
     <link rel="icon" type="image/png" href="logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LilyNopal">
     <link rel="apple-touch-icon" href="logo.png">
-
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
 </head>
@@ -18,12 +16,12 @@
     
     <div id="loading-overlay" class="hidden">
         <div class="loader-content">
-            <span class="loader-emoji">🧸</span>
-            <p class="loader-text">Tunggu yaa...</p>
+            <img src="icon.png" id="loading-icon" class="loader-mascot" alt="Loading">
+            <p class="loader-text">Memproses data...</p>
         </div>
     </div>
 
-    <div id="toast" class="hidden">Masuk dehh! 🎀</div>
+    <div id="toast" class="hidden">Berhasil disimpan.</div>
 
     <div class="container fade-in">
         <div class="mascot-container">
@@ -31,25 +29,22 @@
         </div>
         
         <header class="cute-header">
-            <h1 class="header-title">Lily & Nopal</h1>
+            <h1 class="header-title" id="active-user-title">Finance Lily</h1>
         </header>
-
-        <div class="tab-parent">
-            <button class="tab-btn active" id="btn-lily" onclick="switchUser('lily', event)">🎀 Lily</button>
-            <button class="tab-btn" id="btn-nopal" onclick="switchUser('nopal', event)">🌱 Nopal</button>
-        </div>
 
         <div class="main-balance-card">
             <small>Sisa Uang Jajan</small>
             <h2 id="sisa-saldo">0</h2>
             
+            <div id="spending-insight" class="insight-text">Mengkalkulasi data...</div>
+            
             <div class="mini-summary">
                 <div class="mini-box in">
-                    <span>Masuk 🌸</span>
+                    <span>Pemasukan</span>
                     <b id="total-masuk">0</b>
                 </div>
                 <div class="mini-box out">
-                    <span>Keluar 💸</span>
+                    <span>Pengeluaran</span>
                     <b id="total-keluar">0</b>
                 </div>
             </div>
@@ -57,39 +52,41 @@
 
         <div class="input-card">
             <select id="in-kat" class="pill-input" onchange="filterTable()">
-                <option value="Semua" selected disabled>Pilih Tipe... ✨</option>
-                <option value="Pemasukan">Dapet Uang 🌸</option>
-                <option value="Pengeluaran">Jajan 💸</option>
+                <option value="Semua" selected disabled>Pilih Kategori...</option>
+                <option value="Pemasukan">Pemasukan</option>
+                <option value="Pengeluaran">Pengeluaran</option>
             </select>
-            <input type="number" id="in-nom" placeholder="Berapa nih? Rp 0" inputmode="numeric" class="pill-input">
-            <input type="text" id="in-ket" placeholder="Buat apa? (opsional)" class="pill-input">
-            <button onclick="sendData()" id="btn-send" class="btn-cute">SIMPAN 💖</button>
+            <input type="number" id="in-nom" placeholder="Nominal (Rp)" inputmode="numeric" class="pill-input">
+            <input type="text" id="in-ket" placeholder="Keterangan (Opsional)" class="pill-input">
+            <button onclick="sendData()" id="btn-send" class="btn-cute">SIMPAN</button>
         </div>
 
         <div class="budget-card fade-in">
-            <h3 style="margin-top:0; text-align:center; font-size: 16px;">Budget Bulanan 📊</h3>
+            <h3 class="section-title">Budget Bulanan</h3>
             <table class="budget-table">
                 <thead>
                     <tr>
                         <th>Pos</th>
-                        <th>Budget</th>
-                        <th>Bayar</th>
-                        <th>Sts</th>
+                        <th>Batas</th>
+                        <th>Terpakai</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
-                <tbody id="budget-table-body">
-                    </tbody>
+                <tbody id="budget-table-body"></tbody>
             </table>
         </div>
 
         <div class="list-card">
             <div class="table-scroll" id="scroll-area">
-                <table><tbody id="transaction-table"><tr><td>Lagi cari data... 🔍</td></tr></tbody></table>
+                <table><tbody id="transaction-table"><tr><td style="text-align: center;">Mencari riwayat...</td></tr></tbody></table>
             </div>
         </div>
 
-        <div class="days-pill">HARI BARENG LILY: <span id="days-count">0</span> 💌</div>
+        <div class="days-pill">HARI BARENG LILY: <span id="days-count">0</span></div>
     </div>
+
+    <img src="icon2.png" id="floating-sticker" alt="Ganti Akun" onclick="toggleUser()">
+
     <script src="script.js"></script>
 </body>
 </html>
